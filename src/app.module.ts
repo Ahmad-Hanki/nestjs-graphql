@@ -1,15 +1,15 @@
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
-import { join } from 'path';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import { UserModule } from './user/user.module';
+import { UserModule } from './graphql/user/user.module';
 
 @Module({
   imports: [
     GraphQLModule.forRoot<ApolloDriverConfig>({
-      driver: ApolloDriver, // ✅ required in NestJS v10+
-      autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
-      playground: true, // optional
+      autoSchemaFile: 'src/schema.gql',
+      driver: ApolloDriver,
+      playground: true, // ✅ enables Apollo Sandbox
+      introspection: true, // ✅ allows schema inspection
     }),
     UserModule,
   ],
